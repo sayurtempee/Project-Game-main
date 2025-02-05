@@ -1,0 +1,137 @@
+@font-face {
+  font-family: "thaleahfat";
+  src: url("../assets/fonts/thaleahfat-webfont.woff2") format("woff2"),
+    url("../assets/fonts/thaleahfat-webfont.ttf") format("truetype");
+  font-weight: 400;
+}
+
+body {
+  text-align: center;
+  font-family: "thaleahfat", helvetica;
+}
+
+button {
+  font-family: "thaleahfat", helvetica;
+}
+
+#main {
+  width: 400px;
+  height: 500px;
+  background: url("img/background.jpg");
+  margin: 0 auto;
+}
+
+#area {
+  width: 400px;
+  height: 500px;
+  position: absolute;
+  overflow: hidden;
+  z-index: 100;
+}
+
+@keyframes planetjet {
+  from {
+    background: url("img/roket1.png");
+    background-size: 100%;
+  }
+  to {
+    background: url("img/roket2.png");
+    background-size: 100%;
+  }
+}
+
+#plane {
+  width: 70px;
+  height: 65px;
+  background: url("img/roket1.png");
+  background-size: 100%;
+  position: absolute;
+  margin-top: 400px;
+  animation: planetjet 0.3s infinite;
+}
+
+#plane.freeze {
+  width: 70px;
+  height: 65px;
+  background: url("img/roket1.png");
+  background-size: 100%;
+  position: absolute;
+  margin-top: 400px;
+  /* animation: planetjet 0.3s infinite; */
+}
+
+@keyframes meteor {
+  from {
+    background: url("img/meteor1.png");
+    background-size: 100%;
+  }
+  to {
+    background: url("img/meteor2.png");
+    background-size: 100%;
+  }
+}
+
+.meteor {
+  width: 60px;
+  height: 60px;
+  background: url("img/meteor1.png");
+  background-size: 100%;
+  animation: meteor 0.7s infinite;
+}
+
+.meteor .freeze {
+  width: 60px;
+  height: 60px;
+  background: url("img/meteor1.png");
+  background-size: 100%;
+  /* animation: meteor 0.7s infinite; */
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(img/background.jpg);
+}
+
+.modal-content {
+  background-color: #191970;
+  margin: 15% auto;
+  padding: 5px;
+  border: 2px solid #888;
+  width: 400px;
+  height: 150px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.modal-content h2 {
+  margin: 0 0 10px;
+  color: red;
+  font-size: 36px;
+}
+
+.modal-content p {
+  font-size: 18px;
+  margin: 10px 0;
+  color: whitesmoke;
+}
+
+.modal-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-content button.exit {
+  background-color: #f44336;
+}

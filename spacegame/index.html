@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Space Adventure</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <h1>Space Adventure</h1>
+  <h3>Score: <span id="score">0</span></h3>
+  <h3>High Score: <span id="highScore">0</span></h3>
+  <h3>Level: <span id="level">1</span></h3>
+  <div id="main">
+    <div id="area">
+      <div id="plane" style="margin-left: 160px; margin-top: 350px"></div>
+    </div>
+  </div>
+
+  <!-- Modal Game Over -->
+  <div id="gameOverModal" class="modal">
+    <div class="modal-content">
+      <h2>Game Over</h2>
+      <p>Your Score: <span id="finalScore"></span></p>
+      <button id="retry">Retry</button>
+      <button id="exit" class="exit">Exit</button>
+    </div>
+  </div>
+
+  <!-- Modal Winner -->
+  <div id="winnerModal" class="modal">
+    <div class="modal-content">
+      <h2>Winner!</h2>
+      <p>Congratulations! Your Score: <span id="winnerScore"></span></p>
+      <button id="playAgain">Play Again</button>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var isMoving = true;
+    var isRunning = true;
+    var level = 1;
+    var meteorSpeed = 1;
+    var meteors = []; // Array to store meteor elements
+
+    var highScore = localStorage.getItem('highScore-space') || '0';
+    document.getElementById('highScore').innerText = highScore;
+    var score = 0;
+
+    function createMeteor() {
+      var meteor = document.createElement('div');
+      meteor.id = 'meteor' + meteors.length; // Give each meteor a unique ID
+      meteor.className = 'meteor'; // Add a class for styling
+      meteor.style.marginTop = '-100px';
+      meteor.style.marginLeft = Math.floor(Math.random() * 400) + 'px'; // Random horizontal position
+      document.getElementById('area').appendChild(meteor);
+      meteors.push(meteor);
+    }
+
+    // Initial creation of meteors
+    for (let i = 0; i < 3; i++) { // Start with 3 meteors
+      createMeteor();
+    }
+
+
+    function setBackgroundMoving() {
+      if (isMoving) {
+        const bg = document.getElementById("main");
+
+        const currentPos = parseInt(getComputedStyle(bg).backgroundPositionY) || 0;
+
+        score++;
+        document.getElementById("score").innerHTML = score;
+
+        if (score >= 1000 * level) {
+          level++;
+          meteorSpeed = meteorSpeed + 0.5;
+          // Add a new meteor every time the level increases
+          createMeteor();
+        }
+
+        document.getElementById("level").innerHTML = level;
+
+        if (level > 3) {
+          showWinnerModal();
+          isMoving = false;
+          return;
+        }
+
+        bg.style.backgroundPositionY = currentPos + 1 + "px";
+
+
+        if (isRunning) {
+          requestAnimationFrame(setBackgroundMoving);
+        }
+
+      }
+    }
+
+    function setMeteorMoving() {
+      setTimeout(function () {
+        meteors.forEach(meteor => {  // Update each meteor's position
+          meteor.style.marginTop = parseInt(meteor.style.marginTop.replace("px", "")) + 1 + "px";
+          if (parseInt(meteor.style.marginTop.replace("px", "")) > 500) {
+            meteor.style.marginLeft = Math.floor(Math.random() * 250) + "px";
+            meteor.style.marginTop = "-100px";
+          }
+          // Collision detection for EACH meteor
+          if (
+            meteor.offsetTop + 56 >= plane.offsetTop &&
+            meteor.offsetLeft + 50 >= plane.offsetLeft &&
+            meteor.offsetTop + 56 <= plane.offsetTop + 100 &&
+            meteor.offsetLeft <= plane.offsetLeft + 50
+          ) {
+            showGameOverModal();
+            isMoving = false;
+            plane.setAttribute("class", "freeze");
+            meteor.setAttribute("class", "freeze");
+            // Stop all meteors
+            meteors.forEach(m => m.setAttribute("class", "freeze"));
+
+
+          }
+        });
+
+        if (isMoving) { // Only call recursively if game is not over
+          setMeteorMoving();
+        }
+      }, meteorSpeed);
+    }
+
+    setBackgroundMoving();
+    setMeteorMoving();
+
+    window.addEventListener("keydown", function (e) {
+      var plane = document.getElementById("plane");
+
+      if (!plane) {
+        console.error('Element with ID "plane" not found!');
+        return;
+      }
+
+      var left = parseInt(plane.style.marginLeft.replace("px", "")) || 0;
+      var top = parseInt(plane.style.marginTop.replace("px", "")) || 0;
+
+      if (isMoving) {
+        if (e.keyCode == 65 || e.code == "ArrowLeft") {
+          if (left > 0) {
+            plane.style.marginLeft = left - 10 + "px";
+          }
+        } else if (e.keyCode == 87 || e.code == "ArrowUp") {
+          if (top > 0) {
+            plane.style.marginTop = top - 10 + "px";
+          }
+        } else if (e.keyCode == 68 || e.code == "ArrowRight") {
+          if (left < 340) {
+            plane.style.marginLeft = left + 10 + "px";
+          }
+        } else if (e.keyCode == 83 || e.code == "ArrowDown") {
+          if (top < 400) {
+            plane.style.marginTop = top + 10 + "px";
+          }
+        }
+      }
+    });
+
+    function showGameOverModal() {
+      if(score > highScore){
+        localStorage.setItem('highScore-space', score);
+      }
+      
+      document.getElementById('highScore').innerText = localStorage.getItem('highScore-space');
+
+      const modal = document.getElementById("gameOverModal");
+      const finalScore = document.getElementById("finalScore");
+      finalScore.textContent = document.getElementById("score").innerHTML;
+      modal.style.display = "block";
+
+      document.getElementById("retry").onclick = function () {
+        window.location.reload();
+      };
+
+      document.getElementById("exit").onclick = function () {
+        window.location.href = "../index.html";
+      };
+    }
+
+    function showWinnerModal() {
+      const modal = document.getElementById("winnerModal");
+      const winnerScore = document.getElementById("winnerScore");
+      winnerScore.textContent = document.getElementById("score").innerHTML;
+      modal.style.display = "block";
+
+      document.getElementById("playAgain").onclick = function () {
+        window.location.reload();
+      };
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kelompok 1 - Games</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="assets/css/minecraft-css-framework-v-1.0.0.css"
+    />
+
+    <style>
+      html {
+        scrollbar-width: none;
+      }
+
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      .element::-webkit-scrollbar {
+        width: 0 !important;
+      }
+
+      @keyframes move-cloud-left {
+        from {
+          transform: translate(100%, -100%);
+          /* Mulai di luar layar sebelah kanan */
+        }
+
+        to {
+          transform: translate(-100%, 100%);
+          /* Berakhir di luar layar sebelah kiri */
+        }
+      }
+
+      @keyframes earth-move-right {
+        from {
+          transform: translateX(100%);
+        }
+
+        to {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes object-move-up {
+        from {
+          transform: translateY(100%);
+          /* Mulai di luar layar sebelah kanan */
+        }
+
+        to {
+          transform: translateY(-100%);
+          /* Berakhir di luar layar sebelah kiri */
+        }
+      }
+
+      .cloud-left {
+        position: absolute;
+        top: 0%;
+        left: 0;
+        width: 100%;
+        /* 50% dari lebar layar */
+        /* max-width: 2000px; */
+        /* Maksimal lebar */
+        height: auto;
+        /* opacity: 0.8; */
+        z-index: 100;
+        animation: move-cloud-left 25s linear infinite;
+        /* Durasi 20 detik, berulang */
+      }
+
+      .austronot {
+        position: absolute;
+        top: 0%;
+        left: 0;
+        width: 100%;
+        /* 50% dari lebar layar */
+        /* max-width: 2000px; */
+        /* Maksimal lebar */
+        height: auto;
+        /* opacity: 0.8; */
+        z-index: 115;
+        animation: object-move-up 45s linear infinite;
+      }
+
+      .earth {
+        position: absolute;
+        top: 0%;
+        left: 0;
+        width: 100%;
+        /* 50% dari lebar layar */
+        /* max-width: 2000px; */
+        /* Maksimal lebar */
+        height: auto;
+        /* opacity: 0.8; */
+        z-index: 110;
+        animation: earth-move-right 85s linear infinite;
+      }
+
+      body.modal-open-prevent-interaction {
+        pointer-events: none;
+        /* Prevents interaction with elements below */
+      }
+
+      .modal {
+        pointer-events: auto;
+      }
+
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+      }
+
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+      }
+
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body class="modal-open-prevent-interaction">
+    <img src="./assets/meteor2.png" alt="Cloud Left" class="cloud-left" />
+    <img
+      src="./assets/ufo.png"
+      alt="Cloud Left"
+      width="50px"
+      class="austronot"
+    />
+    <img src="./assets/naga.png" alt="Cloud Left" width="50px" class="earth" />
+    <div class="background-container">
+      <div class="title">
+        <img src="assets/welcome-text.png" alt="" />
+        <h1 id="player" class="tooltip">
+          Player! <span class="tooltiptext">Click to change</span>
+        </h1>
+      </div>
+      <div class="games">
+        <a href="spacegame/index.html">
+          <img src="assets/example-1.png" alt="" />
+        </a>
+        <a href="flappy-bird/index.html">
+          <img src="assets/example-2.png" alt="" />
+        </a>
+      </div>
+      <div class="games">
+        <a href="snake-game/index.html">
+          <img src="assets/example-4.png" alt="" />
+        </a>
+        <a href="TicTacToe/index.html">
+          <img src="assets/example-3.png" alt="" />
+        </a>
+      </div>
+      <!-- <img src="./assets/cloud.png" alt=""> -->
+      <img src="assets/cloud1.png" alt="Cloud" class="cloud" />
+    </div>
+
+    <!-- Modal -->
+    <div id="example-modal" class="modal">
+      <div class="modal-header">Your Nickname</div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="form-label">Your Name</label>
+          <input type="text" name="" class="form-input" id="nick" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="button button-primary"
+          onclick="setUsername(document.getElementById('nick').value); document.getElementById('example-modal').classList.remove('modal-open'); document.body.classList.remove('modal-open-prevent-interaction');"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+
+    <script>
+      window.onload = function () {
+        if (localStorage.getItem("username") == null) {
+          document.getElementById("example-modal").classList.add("modal-open");
+          document.body.classList.add("modal-open-prevent-interaction");
+        } else {
+          document.body.classList.remove("modal-open-prevent-interaction");
+          document.getElementById("player").textContent = getUsername();
+        }
+      };
+
+      document.getElementById("player").addEventListener("click", (e) => {
+        document.getElementById("example-modal").classList.add("modal-open");
+        document.body.classList.add("modal-open-prevent-interaction");
+      });
+
+      function setUsername(username) {
+        localStorage.setItem("username", username);
+
+        document.getElementById("player").textContent = getUsername();
+      }
+
+      function getUsername() {
+        return localStorage.getItem("username") + "!" || "Player!";
+      }
+    </script>
+  </body>
+</html>

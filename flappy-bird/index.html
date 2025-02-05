@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" , content="width=device-width, initial-scale=1.0">
+  <title>Flappy Bird</title>
+  <link rel="stylesheet" href="flappybird.css">
+  <link rel="stylesheet" href="../assets/css/minecraft-css-framework-v-1.0.0.css">
+  <script src="flappybird.js"></script>
+</head>
+
+<body style="background: #c8e8fc;">
+  <div>
+    <h4 style="color: black;">Score: <span id="score">0</span></h4>
+    <h5>High Score: <span id="topScore">0</span></h5>
+  </div>
+  <canvas id="board"></canvas>
+  <div id="example-modal" class="modal">
+    <div class="modal-header">Game Over</div>
+    <div class="modal-body">
+      <h1>Want try again?</h1>
+    </div>
+    <div class="modal-footer" style="display: flex; justify-content: space-between;">
+      <button class="button button-primary"
+        onclick="document.getElementById('example-modal').classList.remove('modal-open');">Yes</button>
+      <button class="button button-secondary" onclick="location.href='../index.html';">No</button>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "thaleahfat";
+  src: url("../fonts/thaleahfat-webfont.woff2") format("woff2"),
+      url("../fonts/thaleahfat-webfont.ttf") format("truetype");
+  font-weight: 400;
+}
+
+body {
+  margin: 0; /* Hilangkan margin default */
+  font-family:"thaleahfat", helvetica;
+}
+
+.background-container {
+  background-image: url('../bg.jpg'); /* URL gambar */
+  background-size: cover; /* Ukuran gambar */
+  background-repeat: repeat; /* Hindari pengulangan gambar */
+  background-position: center; /* Posisikan gambar di tengah */
+  height: 100vh; /* Tinggi area sebesar viewport */
+  width: 100%; /* Lebar area penuh */
+  color: white; /* Warna teks */
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* padding: 0 40px; */
+  /* margin: 0 300px; */
+  gap: 10px;
+}
+
+.background-container .cloud {
+  position: absolute; /* Position it within the container */
+  bottom: 0; /* Place it at the bottom */
+  right: 0; /* Place it at the right (adjust as needed) */
+  /* Add more styles for size, opacity, etc., as needed. */
+  z-index: 180;
+}
+
+
+.title {
+  /* width: 400px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.games {
+  /* width: 400px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  /* margin: 0 300px; */
+  z-index: 400;
+}
+
+.games img {
+  width: 300px;
+  height: auto;
+  border: 10px solid transparent;
+  padding: 2px;
+  border-image: url('../border.png') 30;
+}
