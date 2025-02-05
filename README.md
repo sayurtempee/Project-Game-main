@@ -1,8 +1,6 @@
-# Project-Game-main
+# Kelompok Game
 
-- Kelompok Game
-
-1. Chaeza Ibnu Akbar
-2. Danish Raihan Sulistyo
-3. Faris Hilmi Al - Iza
-4. Virly Havy
+- Chaeza Ibnu Akbar
+- Danish Raihan Sulistyo
+- Faris Hilmi Al - Iza
+- Virly Havy
